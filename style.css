@@ -1,64 +1,64 @@
 /* CSS styles for the container */
 .container {
-    position: relative;
-    max-width: 100%; /* Adjust the maximum width of the container */
+  position: relative;
+  max-width: 100%; /* Adjust the maximum width of the container */
 }
 
 /* Style the image */
 .container img {
-    width: 100%; /* Adjust the image width to your preference */
-    height: auto;
-    display: block;
+  width: 100%; /* Adjust the image width to your preference */
+  height: auto;
+  display: block;
 }
 
 /* CSS styles for the top row */
 .top-row {
-    position: absolute;
-    top: 48%; /* Adjust top to move the box down by 50% of the image height */
-    left: 50%; /* Adjust left to move the box right by 50% of the image width */
-    transform: translate(-50%, -50%); 
-    width: 60%;
-    padding: 10px; /* Adjust the top row padding */
-    font-size: 18px; /* Adjust the font size of the top row text */
-    text-align: center;
-    border: 2px solid black; /* Customize the top row border */
-    display: flex;
-    justify-content: space-between; /* Align children to left, center, and right */
-    align-items: center;
+  position: absolute;
+  top: 48%; /* Adjust top to move the box down by 50% of the image height */
+  left: 50%; /* Adjust left to move the box right by 50% of the image width */
+  transform: translate(-50%, -50%);
+  width: 60%;
+  padding: 10px; /* Adjust the top row padding */
+  font-size: 18px; /* Adjust the font size of the top row text */
+  text-align: center;
+  border: 2px solid black; /* Customize the top row border */
+  display: flex;
+  justify-content: space-between; /* Align children to left, center, and right */
+  align-items: center;
 }
 
 /* Style for the "statusElement" */
 #statusElement {
-    font-size: 18px; /* Adjust the font size of the status text */
-    font-weight: bold;
-    color: black;
-    background-color: transparent;
-    padding: 5px; /* Adjust the padding around the status text */
+  font-size: 18px; /* Adjust the font size of the status text */
+  font-weight: bold;
+  color: black;
+  background-color: transparent;
+  padding: 5px; /* Adjust the padding around the status text */
 }
 
 /* Style for the "raisedAmount" */
 #raisedAmount {
-    font-size: 16px; /* Adjust the font size of the raised amount text */
-    color: green; /* Customize the text color */
-    text-align: center;
-    display: inline;
+  font-size: 16px; /* Adjust the font size of the raised amount text */
+  color: green; /* Customize the text color */
+  text-align: center;
+  display: inline;
 }
 
 /* Style for the "goalAmount" */
 #goalAmount {
-    font-size: 16px; /* Adjust the font size of the goal amount text */
-    color: green; /* Customize the text color */
-    text-align: center;
-    display: inline;
+  font-size: 16px; /* Adjust the font size of the goal amount text */
+  color: green; /* Customize the text color */
+  text-align: center;
+  display: inline;
 }
 /* Style for the progress bar */
 .progress-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 100%;
-    background-color: red;
-    transition: width 1s; /* Smooth transition over 1 second */
-    z-index: -1; /* Place it behind other elements in the top row */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: red;
+  transition: width 1s; /* Smooth transition over 1 second */
+  z-index: -1; /* Place it behind other elements in the top row */
 }
