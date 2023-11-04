@@ -1,3 +1,6 @@
+// Import the Axios library
+const axios = require('axios');
+
 // Variables to store the last known raised amount and goal amount
 let lastKnownRaisedAmount = 0;
 let lastKnownGoalAmount = 0;
