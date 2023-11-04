@@ -4,8 +4,8 @@ let lastKnownGoalAmount = 0;
 
 // Function to update the progress bar based on the raised and goal amounts
 function updateProgressBar(raisedAmount, goalAmount) {
-    const raisedAmountValue = parseFloat(raisedAmount.replace(/\D/g, ''));
-    const goalAmountValue = parseFloat(goalAmount.replace(/\D/g, ''));
+    const raisedAmountValue = parseFloat(raisedAmount.replace(/[^0-9.]/g, ''));
+    const goalAmountValue = parseFloat(goalAmount.replace(/[^0-9.]/g, ''));
 
     // Calculate the width as a percentage of the goal
     const widthPercentage = (raisedAmountValue / goalAmountValue) * 100;
@@ -33,9 +33,9 @@ function getStatus() {
             const tempElement = document.createElement("div");
             tempElement.innerHTML = htmlContent;
 
-            // Extract Raised and Goal amounts
-            const raisedAmount = tempElement.querySelector(".team-block_progress-raised").textContent;
-            const goalAmount = tempElement.querySelector(".team-block_progress-goal").textContent;
+            // Extract Raised and Goal amounts using jQuery
+            const raisedAmount = $(".team-block_progress-raised", tempElement).text();
+            const goalAmount = $(".team-block_progress-goal", tempElement).text();
 
             // Update your webpage with the status information
             document.getElementById("raisedAmount").textContent = raisedAmount;
