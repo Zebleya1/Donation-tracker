@@ -1,12 +1,41 @@
-// Import the Axios library
-const axios = require('axios');
+// Wait for the DOM to be ready
+$(document).ready(function () {
+  const iframe = document.getElementById("externalFrame");
 
-// Variables to store the last known raised amount and goal amount
-let lastKnownRaisedAmount = 0;
-let lastKnownGoalAmount = 0;
+  iframe.addEventListener("load", function () {
+    // Access the content of the iframe
+    const iframeContent = iframe.contentWindow.document;
 
+    // Extract the data from the span elements within the iframe
+    const raisedAmountElement = iframeContent.querySelector(
+      ".team-block_progress-raised"
+    );
+    const goalAmountElement = iframeContent.querySelector(
+      ".team-block_progress-goal"
+    );
+
+    if (raisedAmountElement && goalAmountElement) {
+      const raisedAmount = raisedAmountElement.textContent.trim();
+      const goalAmount = goalAmountElement.textContent.trim();
+
+      // Update the content on your webpage
+      document.getElementById(
+        "raisedAmount"
+      ).textContent = `Raised: ${raisedAmount}`;
+      document.getElementById("goalAmount").textContent = `Goal: ${goalAmount}`;
+      document.getElementById("statusElement").textContent =
+        "Status: Data updated";
+
+      // Update the progress bar (if needed)
+      updateProgressBar(raisedAmount, goalAmount);
+    } else {
+      console.log("Data not found");
+    }
+  });
+});
 // Function to update the progress bar based on the raised and goal amounts
 function updateProgressBar(raisedAmount, goalAmount) {
+  // Convert raisedAmount and goalAmount to numbers
   const raisedAmountValue = parseFloat(raisedAmount.replace(/[^0-9.]/g, ""));
   const goalAmountValue = parseFloat(goalAmount.replace(/[^0-9.]/g, ""));
 
@@ -14,58 +43,16 @@ function updateProgressBar(raisedAmount, goalAmount) {
   const widthPercentage = (raisedAmountValue / goalAmountValue) * 100;
   const progressBar = document.querySelector(".progress-bar");
 
-  if (widthPercentage > 100) {
-    progressBar.style.width = "100%"; // Ensure it doesn't exceed 100%
-    progressBar.style.backgroundColor = "green"; // Goal reached
+  // Limit the widthPercentage to a maximum of 100%
+  const limitedWidthPercentage = Math.min(widthPercentage, 100);
+
+  // Set the width of the progress bar
+  progressBar.style.width = `${limitedWidthPercentage}%`;
+
+  // Change the color to green when the goal is reached
+  if (limitedWidthPercentage >= 100) {
+    progressBar.style.backgroundColor = "green";
   } else {
-    progressBar.style.width = `${widthPercentage}%`;
     progressBar.style.backgroundColor = "red";
   }
 }
-
-// Function to fetch and update status
-function getStatus() {
-  // Make an HTTP request to the remote website to get the status.
-  // This example uses the axios library for simplicity.
-  axios
-    .get("https://give.paws.org/team/530796")
-    .then((response) => {
-      const htmlContent = response.data;
-
-      // Create a temporary element to parse the HTML
-      const tempElement = document.createElement("div");
-      tempElement.innerHTML = htmlContent;
-
-      // Extract Raised and Goal amounts using jQuery
-      const raisedAmount = $(".team-block_progress-raised", tempElement).text();
-      const goalAmount = $(".team-block_progress-goal", tempElement).text();
-
-      // Update your webpage with the status information
-      document.getElementById("raisedAmount").textContent = raisedAmount;
-      document.getElementById("goalAmount").textContent = goalAmount;
-      document.getElementById("statusElement").textContent =
-        "Status: Data updated";
-
-      // Update the progress bar
-      updateProgressBar(raisedAmount, goalAmount);
-
-      // Store the last known values
-      lastKnownRaisedAmount = raisedAmount;
-      lastKnownGoalAmount = goalAmount;
-    })
-    .catch((error) => {
-      console.error("Error fetching status:", error);
-      // Display the last known number if an error occurs
-      document.getElementById("statusElement").textContent =
-        "Status: Error fetching data";
-      document.getElementById("raisedAmount").textContent =
-        lastKnownRaisedAmount;
-      document.getElementById("goalAmount").textContent = lastKnownGoalAmount;
-    });
-}
-
-// Poll for status every 5 seconds (adjust the interval as needed).
-setInterval(getStatus, 5000);
-
-// Initial status retrieval
-getStatus();
